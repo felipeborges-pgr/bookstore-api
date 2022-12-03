@@ -2,16 +2,25 @@ package com.felipe.bookstore;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.felipe.bookstore.domain.Categoria;
 import com.felipe.bookstore.domain.Livro;
+import com.felipe.bookstore.repositories.CategoriaRepository;
+import com.felipe.bookstore.repositories.LivroRepository;
 
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
-
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
+	@Autowired
+	private LivroRepository livroRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
@@ -24,6 +33,9 @@ public class BookstoreApplication implements CommandLineRunner {
 		Livro l1 = new Livro(null, "Clean Code", "Robert Martin", "Lorem ipsum", cat1);
 		
 		cat1.getLivros().addAll(Arrays.asList(l1));
+		
+		this.categoriaRepository.saveAll(Arrays.asList(cat1));
+		this.livroRepository.saveAll(Arrays.asList(l1));
 		
 	}
 
